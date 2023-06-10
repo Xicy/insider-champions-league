@@ -39,14 +39,15 @@ export default {
     created() {
         if (localStorage.hasOwnProperty('dark')) {
             this.dark = JSON.parse(localStorage.dark) ? true : false;
-            const element = document.body;
-            if (this.dark) {
-                element.classList.add('dark');
-            } else {
-                element.classList.remove('dark');
-            }
         } else {
             this.dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        const element = document.body;
+        if (this.dark) {
+            element.classList.add('dark');
+        } else {
+            element.classList.remove('dark');
         }
     },
     methods: {
