@@ -24,6 +24,12 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Build Vue
+      run: npm run build
     - name: Prepare env file for test
       run: cp .env.example .env && php artisan key:generate
     - uses: php-actions/phpunit@v3
