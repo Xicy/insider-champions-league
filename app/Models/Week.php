@@ -5,6 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Week
+ * @package App\Models
+ *
+ * @property-read integer $id
+ * @property integer $week
+ * @property integer $home_team_id
+ * @property integer $away_team_id
+ * @property integer $home_team_score
+ * @property integer $away_team_score
+ * @property integer $played
+ *
+ * @mixin Model
+ */
 class Week extends Model
 {
     use HasFactory;
