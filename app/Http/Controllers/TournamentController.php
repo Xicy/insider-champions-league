@@ -38,11 +38,7 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        // TODO: Move to service
-        $tournament = $this->tournamentRepository->findById($tournament->id);
-        $tournament->fixtures = $this->fixtureGeneratorInterface->generate($tournament)->groupBy('week')->values();
-        //$tournament->fixtures = $tournament->fixtures->groupBy('week');
-        return $tournament;
+        return $this->tournamentRepository->findById($tournament->id);
     }
 
     /**
