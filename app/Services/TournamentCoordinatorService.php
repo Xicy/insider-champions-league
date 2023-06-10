@@ -9,7 +9,7 @@ use App\Contracts\{
     PairRepositoryInterface
 };
 
-use App\Models\{Tournament, Pair};
+use App\Models\{Tournament, Pair, Team};
 
 class TournamentCoordinatorService implements TournamentCoordinatorInterface
 {
@@ -53,8 +53,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
     public function playNextWeek(Tournament $tournament)
     {
         $pairs = $this->tournamentRepository->getCurrentWeekPairs($tournament->id);
-        if($pairs->count() == 0)
-        {
+        if ($pairs->count() == 0) {
             return false;
         }
 
@@ -125,38 +124,63 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
         $homeScore = $result['home_team_score'];
         $awayScore = $result['away_team_score'];
 
-        // TODO: refactor more readable
         if ($homeScore > $awayScore) {
-            $pair->homeTeam->won++;
-            $pair->homeTeam->goals_for += $homeScore;
-            $pair->homeTeam->goals_against += $awayScore;
-            $pair->homeTeam->points += 3;
-
-            $pair->awayTeam->lost++;
-            $pair->awayTeam->goals_for += $awayScore;
-            $pair->awayTeam->goals_against += $homeScore;
+            $this->won($pair->homeTeam, $homeScore, $awayScore);
+            $this->lost($pair->awayTeam, $awayScore, $homeScore);
         } elseif ($homeScore < $awayScore) {
-            $pair->awayTeam->won++;
-            $pair->awayTeam->goals_for += $homeScore;
-            $pair->awayTeam->goals_against += $awayScore;
-            $pair->awayTeam->points += 3;
-
-            $pair->homeTeam->lost++;
-            $pair->homeTeam->goals_for += $awayScore;
-            $pair->homeTeam->goals_against += $homeScore;
+            $this->won($pair->awayTeam, $awayScore, $homeScore);
+            $this->lost($pair->homeTeam, $homeScore, $awayScore);
         } else {
-            $pair->homeTeam->drawn++;
-            $pair->homeTeam->goals_for += $homeScore;
-            $pair->homeTeam->goals_against += $awayScore;
-            $pair->homeTeam->points++;
-
-            $pair->awayTeam->drawn++;
-            $pair->awayTeam->goals_for += $awayScore;
-            $pair->awayTeam->goals_against += $homeScore;
-            $pair->awayTeam->points++;
+            $this->drawn($pair->homeTeam, $homeScore, $awayScore);
+            $this->drawn($pair->awayTeam, $awayScore, $homeScore);
         }
 
         $this->teamRepository->update($pair->homeTeam, $pair->homeTeam->toArray());
         $this->teamRepository->update($pair->awayTeam, $pair->awayTeam->toArray());
+    }
+
+
+    /**
+     * @param Team $team
+     * @param int $goalsFor
+     * @param int $goalsAgainst
+     * @return void
+     */
+    public function won(Team $team, int $goalsFor, int $goalsAgainst): void
+    {
+        $team->won++;
+        $team->points += 3;
+
+        $team->goals_for += $goalsFor;
+        $team->goals_against += $goalsAgainst;
+    }
+
+    /**
+     * @param Team $team
+     * @param int $goalsFor
+     * @param int $goalsAgainst
+     * @return void
+     */
+    public function drawn(Team $team, int $goalsFor, int $goalsAgainst): void
+    {
+        $team->drawn++;
+        $team->points++;
+
+        $team->goals_for += $goalsFor;
+        $team->goals_against += $goalsAgainst;
+    }
+
+    /**
+     * @param Team $team
+     * @param int $goalsFor
+     * @param int $goalsAgainst
+     * @return void
+     */
+    public function lost(Team $team, int $goalsFor, int $goalsAgainst): void
+    {
+        $team->lost++;
+
+        $team->goals_for += $goalsFor;
+        $team->goals_against += $goalsAgainst;
     }
 }
