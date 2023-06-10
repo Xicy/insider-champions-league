@@ -9,4 +9,4 @@ use App\Http\Controllers\{
 
 Route::resource('fixtures', FixtureController::class);
 Route::resource('teams', TeamController::class);
-Route::resource('tournament', TournamentController::class);
+Route::resource('tournaments', TournamentController::class);
