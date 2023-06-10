@@ -26,8 +26,9 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 - [x] Fixture Generator Implement
 - [x] Tournament Coordinator Implement
 - [x] Prediction Service Implement
+- [x] Write Unit Tests
 - [ ] Validation message
-- [ ] Write Unit Tests
+
 
 #### Applications 
 - [x] Create Docker package
