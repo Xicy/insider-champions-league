@@ -33,7 +33,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b border-gray-100 dark:border-gray-700/50" v-for="fixture in computedFixture">
+                            <tr class="border-b border-gray-100 dark:border-gray-700/50" v-for="fixture in computedFixture"
+                                :key="fixture.team_id">
                                 <td class="p-3">
                                     {{ fixture.team.name }}
                                 </td>
@@ -69,7 +70,7 @@
                     <table class="min-w-full text-sm align-middle whitespace-nowrap">
                         <tbody>
                             <tr class="border-b border-gray-100 dark:border-gray-700/50"
-                                v-for="prediction in computedPredictions">
+                                v-for="prediction in computedPredictions" :key="prediction.team_id">
                                 <td class="p-3">
                                     {{ prediction.team.name }}
                                 </td>
