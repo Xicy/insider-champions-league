@@ -106,7 +106,7 @@ class TournamentRepository implements TournamentRepositoryInterface
     {
         $currentWeek = $this->getCurrentWeek($id);
         if ($currentWeek == -1) {
-            $currentWeek = 0;
+            $currentWeek = 1;
         }
         $tournament = $this->findById($id);
         $pair = $tournament->pairs()->orderBy('week', 'desc')->where('played', false)->first();

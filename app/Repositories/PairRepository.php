@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\{PairRepositoryInterface};
 use App\Models\{Pair};
+use Illuminate\Support\Collection;
 
 class PairRepository implements PairRepositoryInterface
 {
@@ -25,4 +26,12 @@ class PairRepository implements PairRepositoryInterface
         $this->model->find($pair->id)->update($data);
     }
 
+    /**
+     * @param int $id
+     * @return Collection<Pair>
+     */
+    public function getByTournamentId(int $id): Collection
+    {
+        return $this->model->where('tournament_id', $id)->get();
+    }
 }
