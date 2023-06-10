@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Contracts\{TournamentInterface};
+use App\Contracts\{TournamentRepositoryInterface};
 use App\Repositories\{TournamentRepository};
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $toBind = [
-            TournamentInterface::class => TournamentRepository::class,
+            TournamentRepositoryInterface::class => TournamentRepository::class,
         ];
 
         foreach ($toBind as $interface => $implementation) {

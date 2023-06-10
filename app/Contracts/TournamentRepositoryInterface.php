@@ -6,7 +6,7 @@ use App\Models\Fixture;
 use App\Models\{Team, Tournament};
 use Illuminate\Database\Eloquent\Collection;
 
-interface TournamentInterface
+interface TournamentRepositoryInterface
 {
     /**
      * @return Collection<Tournament>

@@ -2,11 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    FixtureController,
-    TeamController,
     TournamentController
 };
 
-Route::resource('fixtures', FixtureController::class);
-Route::resource('teams', TeamController::class);
-Route::resource('tournaments', TournamentController::class);
+Route::apiResources([
+    'tournaments' => TournamentController::class
+]);

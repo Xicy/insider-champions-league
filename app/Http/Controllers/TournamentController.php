@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TournamentStoreRequest;
-use App\Contracts\{TournamentInterface};
+use App\Contracts\{TournamentRepositoryInterface};
 use App\Models\Tournament;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class TournamentController extends Controller
 {
 
     public function __construct(
-        protected TournamentInterface $tournamentRepository
+        protected TournamentRepositoryInterface $tournamentRepository
     ) {
     }
 

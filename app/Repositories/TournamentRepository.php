@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Contracts\TournamentInterface;
+use App\Contracts\TournamentRepositoryInterface;
 use App\Models\{Team, Tournament};
 use Illuminate\Database\Eloquent\Collection;
 
-class TournamentRepository implements TournamentInterface
+class TournamentRepository implements TournamentRepositoryInterface
 {
     /**
      * @param Fixture $model
