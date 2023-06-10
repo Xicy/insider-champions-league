@@ -44,12 +44,13 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 ###  Installation
 
 ```bash
-git  clone  https://github.com/Xicy/insider-champions-league
-cd  insider-champions-league
-composer  install
+git clone https://github.com/Xicy/insider-champions-league
+cd insider-champions-league
+composer install
 # Setup .env
-php  artisan  migrate  --seed
-php  artisan  serve
+php artisan migrate  --seed
+php artisan serve
+npm run build
 ```
 
 ### Run with Docker
