@@ -24,4 +24,6 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
+    - name: Prepare env file for test
+      run: cp .env.example .env && php artisan key:generate
     - uses: php-actions/phpunit@v3
