@@ -8,6 +8,7 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 ### TODOs
 #### UI
 - [x] Implement Vue Tailwind
+- [x] Dark mode
 - [x] Create all Pages
 - - [x] Dashboard
 - - [x] Not found
@@ -20,6 +21,11 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 - [ ] Create unit tests
 
 #### Backend
+- [x] Generate DB models
+- [x] Generate Api routes
+- [x] Fixture Generator Implement
+- [x] Tournament Coordinator Implement
+- [ ] Validation message
 - [ ] Write Unit Tests
 
 #### Applications 
