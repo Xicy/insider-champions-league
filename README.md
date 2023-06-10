@@ -55,6 +55,6 @@ php  artisan  serve
 ### Run with Docker
 
 ```bash
-docker run -p 8080:80 ghcr.io/xicy/insider-champions-league:latest
+docker run -p 8080:80 ghcr.io/xicy/insider-champions-league:main
 # Visit http://localhost:8080
 ```
