@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-8 dark:text-gray-100">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-8">
-            <Week v-for="(week, index) in computedWeeks" :week_number="index + 1" :matches="week.matches" />
+            <Week v-for="(week, index) in computedWeeks" :key="week.id" :week_number="index + 1" :matches="week.matches" />
         </div>
         <div class="flex items-center justify-end rounded-xl">
             <button type="button" @click="startSimulation"
@@ -28,36 +28,42 @@ export default {
             ],
             weeks: [
                 {
+                    id: 1,
                     matches: [
                         { home_team_id: 4, away_team_id: 1 },
                         { home_team_id: 2, away_team_id: 3 }
                     ]
                 },
                 {
+                    id: 2,
                     matches: [
                         { home_team_id: 2, away_team_id: 4 },
                         { home_team_id: 3, away_team_id: 1 }
                     ]
                 },
                 {
+                    id: 3,
                     matches: [
                         { home_team_id: 4, away_team_id: 3 },
                         { home_team_id: 1, away_team_id: 2 }
                     ]
                 },
                 {
+                    id: 4,
                     matches: [
                         { home_team_id: 1, away_team_id: 4 },
                         { home_team_id: 3, away_team_id: 2 }
                     ]
                 },
                 {
+                    id: 5,
                     matches: [
                         { home_team_id: 4, away_team_id: 2 },
                         { home_team_id: 1, away_team_id: 3 }
                     ]
                 },
                 {
+                    id: 6,
                     matches: [
                         { home_team_id: 3, away_team_id: 4 },
                         { home_team_id: 2, away_team_id: 1 }
