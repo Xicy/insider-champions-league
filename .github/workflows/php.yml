@@ -28,6 +28,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+    - name: Install Deps
+      run: npm ci
     - name: Build Vue
       run: npm run build
     - name: Prepare env file for test
