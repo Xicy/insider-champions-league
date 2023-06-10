@@ -146,7 +146,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
      * @param int $goalsAgainst
      * @return void
      */
-    public function won(Team $team, int $goalsFor, int $goalsAgainst): void
+    private function won(Team $team, int $goalsFor, int $goalsAgainst): void
     {
         $team->won++;
         $team->points += 3;
@@ -161,7 +161,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
      * @param int $goalsAgainst
      * @return void
      */
-    public function drawn(Team $team, int $goalsFor, int $goalsAgainst): void
+    private function drawn(Team $team, int $goalsFor, int $goalsAgainst): void
     {
         $team->drawn++;
         $team->points++;
@@ -176,7 +176,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
      * @param int $goalsAgainst
      * @return void
      */
-    public function lost(Team $team, int $goalsFor, int $goalsAgainst): void
+    private function lost(Team $team, int $goalsFor, int $goalsAgainst): void
     {
         $team->lost++;
 
