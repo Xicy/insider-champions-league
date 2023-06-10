@@ -64,7 +64,8 @@
                     </table>
                 </div>
             </div>
-            <Week :week_number="computedCurrentWeek" :matches="previousWeek" />
+            <Week :week_number="shownWeek" :matches="previousWeek" :show-move-buttons="true"
+                @next="showNextWeek" @previous="showPreviousWeek" />
             <div
                 class="col-span-1 flex flex-col rounded-lg shadow-sm bg-white overflow-hidden dark:text-gray-100 dark:bg-gray-800">
                 <div class="py-4 px-5 bg-gray-50 dark:bg-gray-700/50">
@@ -141,12 +142,8 @@ export default {
             teams: [],
             pairs: [],
             current_week: 1,
-            predictions: [
-                // { team_id: 1, chance: 10 },
-                // { team_id: 2, chance: 20 },
-                // { team_id: 3, chance: 30 },
-                // { team_id: 4, chance: 40 },
-            ]
+            show_previous_week: 0,
+            predictions: []
         };
     },
     async created() {
@@ -161,6 +158,7 @@ export default {
                 this.teams = data.teams;
                 this.pairs = data.pairs;
                 this.current_week = data.current_week;
+                this.predictions = data.predictions;
             }
             finally {
                 this.awaiting = false;
@@ -197,7 +195,17 @@ export default {
             }
         },
         calculateDisabledAction() {
-            return !this.awaiting && this.computedCurrentWeek >= this.computedPairs.length / 2;
+            return this.awaiting || this.current_week == -1;
+        },
+        showPreviousWeek() {
+            if (this.shownWeek > 1) {
+                this.show_previous_week++;
+            }
+        },
+        showNextWeek() {
+            if (this.show_previous_week > 0) {
+                this.show_previous_week--;
+            }
         }
     },
     computed: {
@@ -219,19 +227,26 @@ export default {
                 }
             }).sort((first, second) => second.chance - first.chance);
         },
+        lastWeek() {
+            return this.pairs[this.pairs.length - 1].week;
+        },
         computedCurrentWeek() {
             if (this.current_week == 0) {
                 return 1
             } else if (this.current_week == -1) {
-                return this.pairs[this.pairs.length - 1].week;
+                return this.lastWeek;
             }
             return this.current_week;
         },
-        previousWeek() {
-            var week = this.computedCurrentWeek - 1;
-            if (week == 0) {
-                week++;
+        shownWeek() {
+            var week = this.computedCurrentWeek - this.show_previous_week;
+            if (week <= 0) {
+                week = 1;
             }
+            return week;
+        },
+        previousWeek() {
+            var week = this.shownWeek;
             return this.computedPairs.filter(pair => pair.week == week);
         }
     }
