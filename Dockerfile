@@ -33,8 +33,8 @@ RUN apt-get update && \
 RUN a2enmod rewrite && \
     sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-RUN cp .env.example .env
-RUN php artisan key:generate && php artisan storage:link && php artisan optimize && php artisan migrate
+RUN cp .env.example .env && sed -i 's!APP_DEBUG=true!APP_DEBUG=false!g' .env && sed -i 's!APP_ENV=local!APP_ENV=production!g' .env
+RUN php artisan key:generate && php artisan storage:link && php artisan optimize && php artisan migrate --force
 
 EXPOSE 80
 
