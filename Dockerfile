@@ -34,7 +34,7 @@ RUN a2enmod rewrite && \
     sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 RUN cp .env.example .env
-RUN php artisan key:generate && php artisan storage:link && php artisan optimize && php artisan migrate:fresh
+RUN php artisan key:generate && php artisan storage:link && php artisan optimize && php artisan migrate
 
 EXPOSE 80
 
