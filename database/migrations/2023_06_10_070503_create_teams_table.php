@@ -16,12 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('tournament_id');
             $table->string('name');
             $table->float('power', 8, 2);
-            $table->int('points')->default(0);
-            $table->int('won')->default(0);
-            $table->int('drawn')->default(0);
-            $table->int('lost')->default(0);
-            $table->int('goals_for')->default(0);
-            $table->int('goals_against')->default(0);
+            $table->integer('points')->default(0);
+            $table->integer('won')->default(0);
+            $table->integer('drawn')->default(0);
+            $table->integer('lost')->default(0);
+            $table->integer('goals_for')->default(0);
+            $table->integer('goals_against')->default(0);
         });
     }
 

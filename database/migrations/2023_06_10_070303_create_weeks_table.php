@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('tournament_id');
-            $table->int('week');
+            $table->integer('week');
             $table->unsignedBigInteger('home_team_id')->nullable();
             $table->unsignedBigInteger('away_team_id')->nullable();
             $table->integer('home_team_score')->nullable();

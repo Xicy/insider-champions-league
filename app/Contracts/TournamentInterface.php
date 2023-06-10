@@ -17,7 +17,7 @@ interface TournamentInterface
      * @param array<Team> $teams
      * @return Tournament
      */
-    public function create(Team ...$teams): Tournament;
+    public function create(array $teams): Tournament;
 
     /**
      * @param int $id

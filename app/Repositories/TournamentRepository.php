@@ -20,23 +20,27 @@ class TournamentRepository implements TournamentInterface
      */
     public function all(): Collection
     {
-        return $this->model->all();
+        return $this->model->newQuery()->orderBy('id','desc')->get();
     }
 
     /**
      * @param array<Team> $teams
      * @return Tournament
      */
-    public function create(Team ...$teams): Tournament
+    public function create(array $teams): Tournament
     {
-        return $this->model->create(compact("teams"));
+        $tournament = $this->model->create();
+        $tournament->teams()->createMany($teams);
+        $tournament->push();
+        return $tournament;
     }
 
     /**
      * @param int $id
      * @return Tournament
      */
-    public function findById(int $id): Tournament{
+    public function findById(int $id): Tournament
+    {
         return $this->model->find($id);
     }
 }

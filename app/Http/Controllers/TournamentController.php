@@ -37,8 +37,9 @@ class TournamentController extends Controller
     {
         // TODO: Validate
         $data = $request->validate([
+            "teams" => "required|array|min:2",
             "teams.*.name" => "required",
-            "teams.*.power" => "required, numeric"
+            "teams.*.power" => "required|numeric"
         ]);
         return $this->tournamentRepository->create($data["teams"]);
     }
