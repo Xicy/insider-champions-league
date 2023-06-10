@@ -20,7 +20,7 @@ class TournamentRepository implements TournamentInterface
      */
     public function all(): Collection
     {
-        return $this->model->newQuery()->orderBy('id','desc')->get();
+        return $this->model->newQuery()->orderBy('id', 'desc')->get();
     }
 
     /**
@@ -41,6 +41,6 @@ class TournamentRepository implements TournamentInterface
      */
     public function findById(int $id): Tournament
     {
-        return $this->model->find($id);
+        return $this->model->newQuery()->with('teams', 'fixtures')->find($id);
     }
 }

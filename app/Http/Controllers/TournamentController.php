@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TournamentStoreRequest;
 use App\Contracts\{TournamentInterface};
 use App\Models\Tournament;
 use Illuminate\Http\Request;
@@ -23,24 +24,11 @@ class TournamentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TournamentStoreRequest $request)
     {
-        // TODO: Validate
-        $data = $request->validate([
-            "teams" => "required|array|min:2",
-            "teams.*.name" => "required",
-            "teams.*.power" => "required|numeric"
-        ]);
+        $data = $request->validated();
         return $this->tournamentRepository->create($data["teams"]);
     }
 
@@ -49,15 +37,13 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        return $this->tournamentRepository->findById($tournament->id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tournament $tournament)
-    {
-        //
+        // TODO: Use service
+        $tournament = $this->tournamentRepository->findById($tournament->id);
+        $response = [
+            "teams" => $tournament->teams,
+            "weeks" => $tournament->fixtures
+        ];
+        return $response;
     }
 
     /**
