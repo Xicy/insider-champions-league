@@ -11,7 +11,7 @@ class FallbackTest extends TestCase
      *
      * @return void
      */
-    public function application_returns_a_successful_response()
+    public function test_application_returns_a_successful_response()
     {
         $response = $this->get('/');
 
@@ -23,7 +23,7 @@ class FallbackTest extends TestCase
      *
      * @return void
      */
-    public function application_returns_a_successful_response_when_fallback()
+    public function test_application_returns_a_successful_response_when_fallback()
     {
         $response = $this->get('/asdasdasdasdasd');
 
