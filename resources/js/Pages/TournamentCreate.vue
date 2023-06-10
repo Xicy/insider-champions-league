@@ -1,5 +1,6 @@
 <template>
     <div class="space-y-8 dark:text-gray-100">
+        <Alert :message="message" />
         <div class="md:flex md:space-x-5" v-for="team in teams">
             <div class="md:flex-none md:w-1/3 text-left pl-5 md:pl-0">
                 <h3 class="flex items-center justify-start space-x-2 font-semibold mb-1">
@@ -64,15 +65,21 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Alert from '../Components/Alert.vue';
+
 export default {
     name: 'TournamentCreate',
+    components: { Alert },
     data() {
         return {
+            message: "",
+            // REMARKS: Predefined teams for demo
             teams: [
-                { id: 1, name: 'Liverpool', power: 67 },
-                { id: 2, name: 'Manchester City', power: 85 },
-                { id: 3, name: 'Chelsea', power: 90 },
-                { id: 4, name: 'Arsenal', power: 72 }
+                { name: 'Liverpool', power: 67 },
+                { name: 'Manchester City', power: 85 },
+                { name: 'Chelsea', power: 90 },
+                { name: 'Arsenal', power: 72 }
             ]
         };
     },
@@ -83,8 +90,22 @@ export default {
         removeTeam(team) {
             this.teams.splice(this.teams.indexOf(team), 1);
         },
-        generateFixture() {
-            // TODO: Add Validation for teams
+        async generateFixture() {
+            try {
+                const { data } = await axios.post('/api/tournaments', { teams: this.teams });
+                this.$router.push('/tournament/' + data.id);
+            } catch (error) {
+                // TODO: Implement error handling
+                const { response } = error;
+                const { data, status } = response;
+                if (status == 422) {
+                    const { message } = data;
+                    this.message = message;
+                    console.log(data);
+                } else {
+                    console.error(error);
+                }
+            }
         }
     }
 }
