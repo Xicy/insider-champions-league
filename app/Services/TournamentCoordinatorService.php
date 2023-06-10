@@ -6,7 +6,8 @@ use App\Contracts\{
     TournamentCoordinatorInterface,
     TournamentRepositoryInterface,
     TeamRepositoryInterface,
-    PairRepositoryInterface
+    PairRepositoryInterface,
+    PredictionInterface
 };
 
 use App\Models\{Tournament, Pair, Team};
@@ -17,7 +18,8 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
     public function __construct(
         protected TournamentRepositoryInterface $tournamentRepository,
         protected TeamRepositoryInterface $teamRepository,
-        protected PairRepositoryInterface $pairRepository
+        protected PairRepositoryInterface $pairRepository,
+        protected PredictionInterface $predictionService
     ) {
     }
 
@@ -30,7 +32,8 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
     {
         $tournament = $this->tournamentRepository->findById($tournament->id);
         $current_week = $this->tournamentRepository->getCurrentWeek($tournament->id);
-        return [...$tournament->toArray(), "current_week" => $current_week];
+        $predictions = $this->predictionService->predict($tournament);
+        return [...$tournament->toArray(), "current_week" => $current_week, "predictions" => $predictions];
     }
 
     /**
@@ -86,7 +89,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
         $home_team_score = 0;
         $away_team_score = 0;
         for ($i = 15; $i <= 90; $i += 15) {
-            if (rand(0, 100) <= 55) {
+            if (rand(0, 100) <= 50) {
                 $home_team_score += $this->score($pair->homeTeam->power);
             } else {
                 $away_team_score += $this->score($pair->awayTeam->power);
@@ -107,7 +110,7 @@ class TournamentCoordinatorService implements TournamentCoordinatorInterface
      */
     private function score(int $power): int
     {
-        if (rand(0, 100) <= $power) {
+        if (rand(0, 110) <= $power) {
             return 1;
         }
         return 0;

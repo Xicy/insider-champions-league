@@ -7,7 +7,8 @@ use App\Contracts\{
     TeamRepositoryInterface,
     PairRepositoryInterface,
     FixtureGeneratorInterface,
-    TournamentCoordinatorInterface
+    TournamentCoordinatorInterface,
+    PredictionInterface
 };
 use App\Repositories\{
     TournamentRepository,
@@ -16,7 +17,8 @@ use App\Repositories\{
 };
 use App\Services\{
     FixtureGeneratorService,
-    TournamentCoordinatorService
+    TournamentCoordinatorService,
+    PredictionService
 };
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
             PairRepositoryInterface::class => PairRepository::class,
             TeamRepositoryInterface::class => TeamRepository::class,
             FixtureGeneratorInterface::class => FixtureGeneratorService::class,
-            TournamentCoordinatorInterface::class => TournamentCoordinatorService::class
+            TournamentCoordinatorInterface::class => TournamentCoordinatorService::class,
+            PredictionInterface::class => PredictionService::class
         ];
 
         foreach ($toBind as $interface => $implementation) {

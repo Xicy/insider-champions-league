@@ -39,8 +39,13 @@ interface TournamentRepositoryInterface
 
     /**
      * @param int $id
+     * @return int
+     */
+    public function getRemainingWeekCount(int $id);
+
+    /**
+     * @param int $id
      * @return Collection
      */
     public function getCurrentWeekPairs(int $id);
-
 }

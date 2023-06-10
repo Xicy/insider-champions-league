@@ -78,7 +78,8 @@ class TournamentRepository implements TournamentRepositoryInterface
      * @param int $id
      * @return int
      */
-    public function getCurrentWeek(int $id){
+    public function getCurrentWeek(int $id)
+    {
         $tournament = $this->findById($id);
         $pair = $tournament->pairs()->orderBy('week')->where('played', false)->first();
         return $pair?->week ?? -1;
@@ -88,13 +89,29 @@ class TournamentRepository implements TournamentRepositoryInterface
      * @param int $id
      * @return Collection
      */
-    public function getCurrentWeekPairs(int $id){
-
+    public function getCurrentWeekPairs(int $id)
+    {
         $week = $this->getCurrentWeek($id);
         if ($week == -1) {
             return new SupportCollection();
         }
         $tournament = $this->findById($id);
         return $tournament->pairs()->with('homeTeam', 'awayTeam')->where('week', $week)->get();
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getRemainingWeekCount(int $id)
+    {
+        $currentWeek = $this->getCurrentWeek($id);
+        if ($currentWeek == -1) {
+            $currentWeek = 0;
+        }
+        $tournament = $this->findById($id);
+        $pair = $tournament->pairs()->orderBy('week', 'desc')->where('played', false)->first();
+        $lastWeek = $pair?->week ?? 0;
+        return ($lastWeek - $currentWeek);
     }
 }
