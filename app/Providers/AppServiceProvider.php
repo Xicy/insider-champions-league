@@ -2,9 +2,22 @@
 
 namespace App\Providers;
 
-use App\Contracts\{TournamentRepositoryInterface, FixtureGeneratorInterface};
-use App\Repositories\{TournamentRepository};
-use App\Services\{FixtureGeneratorService};
+use App\Contracts\{
+    TournamentRepositoryInterface,
+    TeamRepositoryInterface,
+    PairRepositoryInterface,
+    FixtureGeneratorInterface,
+    TournamentCoordinatorInterface
+};
+use App\Repositories\{
+    TournamentRepository,
+    TeamRepository,
+    PairRepository
+};
+use App\Services\{
+    FixtureGeneratorService,
+    TournamentCoordinatorService
+};
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $toBind = [
             TournamentRepositoryInterface::class => TournamentRepository::class,
-            FixtureGeneratorInterface::class => FixtureGeneratorService::class
+            PairRepositoryInterface::class => PairRepository::class,
+            TeamRepositoryInterface::class => TeamRepository::class,
+            FixtureGeneratorInterface::class => FixtureGeneratorService::class,
+            TournamentCoordinatorInterface::class => TournamentCoordinatorService::class
         ];
 
         foreach ($toBind as $interface => $implementation) {

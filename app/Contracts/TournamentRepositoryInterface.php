@@ -24,4 +24,23 @@ interface TournamentRepositoryInterface
      * @return Tournament
      */
     public function findById(int $id): Tournament;
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function resetById(int $id);
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getCurrentWeek(int $id);
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getCurrentWeekPairs(int $id);
+
 }

@@ -5,17 +5,18 @@ namespace App\Repositories;
 use App\Contracts\{TournamentRepositoryInterface, FixtureGeneratorInterface};
 use App\Models\{Team, Tournament};
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class TournamentRepository implements TournamentRepositoryInterface
 {
     /**
-     * @param Fixture $model
+     * @param Tournament $model
+     * @param FixtureGeneratorInterface $fixtureGenerator
      */
     public function __construct(
         protected Tournament $model,
         protected FixtureGeneratorInterface $fixtureGenerator
-        )
-    {
+    ) {
     }
 
     /**
@@ -34,6 +35,8 @@ class TournamentRepository implements TournamentRepositoryInterface
     {
         $tournament = $this->model->create();
         $tournament->teams()->createMany($teams);
+        $pairs = $this->fixtureGenerator->generate($tournament);
+        $tournament->pairs()->createMany($pairs->toArray());
         $tournament->push();
         return $tournament;
     }
@@ -44,6 +47,54 @@ class TournamentRepository implements TournamentRepositoryInterface
      */
     public function findById(int $id): Tournament
     {
-        return $this->model->newQuery()->with('teams', 'pairs')->find($id);
+        $tournament = $this->model->newQuery()
+            ->with([
+                'pairs',
+                'teams' => fn ($q) => $q->orderBy('won', 'desc')->orderBy('drawn', 'desc')->orderBy('lost', 'asc')
+            ])
+            ->find($id);
+        $tournament->fixtures = $tournament->pairs->groupBy('week')->values();
+        return $tournament;
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function resetById(int $id)
+    {
+        $tournament = $this->model->find($id);
+        $teams = $tournament->teams()->get(['name', 'power']);
+        $tournament->teams()->delete();
+        $tournament->pairs()->delete();
+
+        $tournament->teams()->createMany($teams->toArray());
+        $pairs = $this->fixtureGenerator->generate($tournament);
+        $tournament->pairs()->createMany($pairs->toArray());
+        $tournament->push();
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getCurrentWeek(int $id){
+        $tournament = $this->findById($id);
+        $pair = $tournament->pairs()->orderBy('week')->where('played', false)->first();
+        return $pair?->week ?? -1;
+    }
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getCurrentWeekPairs(int $id){
+
+        $week = $this->getCurrentWeek($id);
+        if ($week == -1) {
+            return new SupportCollection();
+        }
+        $tournament = $this->findById($id);
+        return $tournament->pairs()->with('homeTeam', 'awayTeam')->where('week', $week)->get();
     }
 }
