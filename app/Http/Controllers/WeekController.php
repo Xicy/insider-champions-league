@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fixture;
+use App\Models\Week;
 use Illuminate\Http\Request;
 
-class FixtureController extends Controller
+class WeekController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Week::all();
     }
 
     /**
@@ -34,15 +34,15 @@ class FixtureController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Fixture $fixture)
+    public function show(Week $week)
     {
-        //
+        return $week;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fixture $fixture)
+    public function edit(Week $week)
     {
         //
     }
@@ -50,7 +50,7 @@ class FixtureController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Fixture $fixture)
+    public function update(Request $request, Week $week)
     {
         //
     }
@@ -58,7 +58,7 @@ class FixtureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fixture $fixture)
+    public function destroy(Week $week)
     {
         //
     }

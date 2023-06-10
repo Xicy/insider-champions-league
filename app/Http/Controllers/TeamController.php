@@ -12,7 +12,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        return Team::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        //
+        return $team;
     }
 
     /**
