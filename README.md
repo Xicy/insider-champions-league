@@ -15,7 +15,7 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 - - [x] Tournament
 - - [x] Fixture viewer
 - - [x] Simulation
-- [ ] API calls
+- [x] API calls
 - [ ] Make Button Component
 - [ ] Make Card Component
 - [ ] Create unit tests
@@ -25,11 +25,12 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 - [x] Generate Api routes
 - [x] Fixture Generator Implement
 - [x] Tournament Coordinator Implement
+- [x] Prediction Service Implement
 - [ ] Validation message
 - [ ] Write Unit Tests
 
 #### Applications 
-- [ ] Create Docker package
+- [x] Create Docker package
 
 ###  Requirements
 
