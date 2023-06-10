@@ -53,7 +53,6 @@ class TournamentRepository implements TournamentRepositoryInterface
                 'teams' => fn ($q) => $q->orderBy('won', 'desc')->orderBy('drawn', 'desc')->orderBy('lost', 'asc')
             ])
             ->find($id);
-        $tournament->fixtures = $tournament->pairs->groupBy('week')->values();
         return $tournament;
     }
 
@@ -112,6 +111,6 @@ class TournamentRepository implements TournamentRepositoryInterface
         $tournament = $this->findById($id);
         $pair = $tournament->pairs()->orderBy('week', 'desc')->where('played', false)->first();
         $lastWeek = $pair?->week ?? 0;
-        return ($lastWeek - $currentWeek);
+        return ($lastWeek - $currentWeek + 1);
     }
 }
