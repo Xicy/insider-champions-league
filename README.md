@@ -5,6 +5,25 @@ This is a [Laravel](https://laravel.com) project that use [VueJs](https://vuejs.
 
 ##  Notes & caveats
   
+### TODOs
+#### UI
+- [x] Implement Vue Tailwind
+- [x] Create all Pages
+- - [x] Dashboard
+- - [x] Not found
+- - [x] Tournament
+- - [x] Fixture viewer
+- - [x] Simulation
+- [ ] API calls
+- [ ] Make Button Component
+- [ ] Make Card Component
+- [ ] Create unit tests
+
+#### Backend
+- [ ] Write Unit Tests
+
+#### Applications 
+- [ ] Create Docker package
 
 ###  Requirements
 
