@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Contracts\TournamentRepositoryInterface;
+use App\Contracts\{TournamentRepositoryInterface, FixtureGeneratorInterface};
 use App\Models\{Team, Tournament};
 use Illuminate\Database\Eloquent\Collection;
 
@@ -11,7 +11,10 @@ class TournamentRepository implements TournamentRepositoryInterface
     /**
      * @param Fixture $model
      */
-    public function __construct(protected Tournament $model)
+    public function __construct(
+        protected Tournament $model,
+        protected FixtureGeneratorInterface $fixtureGenerator
+        )
     {
     }
 
@@ -41,6 +44,6 @@ class TournamentRepository implements TournamentRepositoryInterface
      */
     public function findById(int $id): Tournament
     {
-        return $this->model->newQuery()->with('teams', 'fixtures')->find($id);
+        return $this->model->newQuery()->with('teams', 'pairs')->find($id);
     }
 }

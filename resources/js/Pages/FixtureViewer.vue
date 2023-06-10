@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-8 dark:text-gray-100">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-8">
-            <Week v-for="(week, index) in computedWeeks" :key="week.id" :week_number="index + 1" :matches="week.matches" />
+            <Week v-for="(week, index) in computedFixtures" :week_number="index + 1" :matches="week.matches" />
         </div>
         <div class="flex items-center justify-end rounded-xl">
             <button type="button" @click="startSimulation"
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
+import axios from 'axios';
 import Week from './../Components/Week.vue';
 
 export default {
@@ -20,67 +22,42 @@ export default {
     components: { Week },
     data() {
         return {
-            teams: [
-                { id: 1, name: 'Liverpool', power: 67 },
-                { id: 2, name: 'Manchester City', power: 85 },
-                { id: 3, name: 'Chelsea', power: 90 },
-                { id: 4, name: 'Arsenal', power: 72 }
-            ],
-            weeks: [
-                {
-                    id: 1,
-                    matches: [
-                        { home_team_id: 4, away_team_id: 1 },
-                        { home_team_id: 2, away_team_id: 3 }
-                    ]
-                },
-                {
-                    id: 2,
-                    matches: [
-                        { home_team_id: 2, away_team_id: 4 },
-                        { home_team_id: 3, away_team_id: 1 }
-                    ]
-                },
-                {
-                    id: 3,
-                    matches: [
-                        { home_team_id: 4, away_team_id: 3 },
-                        { home_team_id: 1, away_team_id: 2 }
-                    ]
-                },
-                {
-                    id: 4,
-                    matches: [
-                        { home_team_id: 1, away_team_id: 4 },
-                        { home_team_id: 3, away_team_id: 2 }
-                    ]
-                },
-                {
-                    id: 5,
-                    matches: [
-                        { home_team_id: 4, away_team_id: 2 },
-                        { home_team_id: 1, away_team_id: 3 }
-                    ]
-                },
-                {
-                    id: 6,
-                    matches: [
-                        { home_team_id: 3, away_team_id: 4 },
-                        { home_team_id: 2, away_team_id: 1 }
-                    ]
-                }
-            ]
+            teams: [],
+            fixtures: []
         };
     },
+
+    async created() {
+        const route = useRoute();
+        await this.loadTournament(route.params.id);
+    },
     methods: {
+        async loadTournament(id) {
+            try {
+                const { data } = await axios.get(`/api/tournaments/${id}`);
+                this.teams = data.teams;
+                this.fixtures = data.fixtures;
+            } catch (error) {
+                // TODO: Implement error handling
+                const { response } = error;
+                const { data, status } = response;
+                if (status == 422) {
+                    const { message } = data;
+                    this.message = message;
+                    console.log(data);
+                } else {
+                    console.error(error);
+                }
+            }
+        },
         startSimulation() {
-            // TODO: Call Simulation
+            this.$router.push(`/tournament/${this.$route.params.id}/simulation`);
         }
     },
     computed: {
-        computedWeeks() {
-            return this.weeks.map(week => {
-                const matches = week.matches.map(match => {
+        computedFixtures() {
+            return this.fixtures.map(week => {
+                const matches = week.map(match => {
                     return {
                         ...match,
                         home: this.teams.find(team => team.id === match.home_team_id),

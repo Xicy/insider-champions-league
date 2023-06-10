@@ -24,8 +24,8 @@ class Tournament extends Model
         return $this->hasMany(Team::class);
     }
 
-    public function fixtures()
+    public function pairs()
     {
-        return $this->hasMany(Week::class);
+        return $this->hasMany(Pair::class);
     }
 }

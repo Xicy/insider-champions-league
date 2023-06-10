@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Week
+ * Class Pair
  * @package App\Models
  *
  * @property-read integer $id
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Model
  */
-class Week extends Model
+class Pair extends Model
 {
     use HasFactory;
 

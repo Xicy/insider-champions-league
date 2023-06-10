@@ -15,7 +15,7 @@ const router = createRouter({
         { path: '/', component: Dashboard },
         { path: '/tournament/create', component: TournamentCreate },
         { path: '/tournament/:id', component: FixtureViewer },
-        { path: '/simulation', component: Simulation },
+        { path: '/tournament/:id/simulation', component: Simulation },
     ]
 });
 

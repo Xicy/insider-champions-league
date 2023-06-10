@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TournamentStoreRequest;
-use App\Contracts\{TournamentRepositoryInterface};
+use App\Contracts\{TournamentRepositoryInterface, FixtureGeneratorInterface};
 use App\Models\Tournament;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,8 @@ class TournamentController extends Controller
 {
 
     public function __construct(
-        protected TournamentRepositoryInterface $tournamentRepository
+        protected TournamentRepositoryInterface $tournamentRepository,
+        protected FixtureGeneratorInterface $fixtureGeneratorInterface
     ) {
     }
 
@@ -37,13 +38,11 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        // TODO: Use service
+        // TODO: Move to service
         $tournament = $this->tournamentRepository->findById($tournament->id);
-        $response = [
-            "teams" => $tournament->teams,
-            "weeks" => $tournament->fixtures
-        ];
-        return $response;
+        $tournament->fixtures = $this->fixtureGeneratorInterface->generate($tournament)->groupBy('week')->values();
+        //$tournament->fixtures = $tournament->fixtures->groupBy('week');
+        return $tournament;
     }
 
     /**

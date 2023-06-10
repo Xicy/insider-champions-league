@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weeks', function (Blueprint $table) {
+        Schema::create('pairs', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('tournament_id');
             $table->integer('week');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weeks');
+        Schema::dropIfExists('pairs');
     }
 };
