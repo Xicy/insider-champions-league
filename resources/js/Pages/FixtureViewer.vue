@@ -1,33 +1,7 @@
 <template>
     <div class="space-y-8 dark:text-gray-100">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-8">
-            <div class="flex flex-col rounded-lg shadow-sm bg-white overflow-hidden dark:text-gray-100 dark:bg-gray-800"
-                v-for="(week, index) in computedWeeks">
-                <div class="py-4 px-5 bg-gray-50 dark:bg-gray-700/50">
-                    <h3 class="font-medium">
-                        Week {{ index + 1 }}
-                    </h3>
-                </div>
-
-                <div class="p-5 grow">
-                    <table class="min-w-full text-sm align-middle whitespace-nowrap">
-                        <tbody>
-                            <tr class="border-b border-gray-100 dark:border-gray-700/50"
-                                v-for="match in week.matches">
-                                <td class="p-3">
-                                    {{ match.home.name }}
-                                </td>
-                                <td class="p-3">
-                                    -
-                                </td>
-                                <td class="p-3 text-end">
-                                    {{ match.away.name }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <Week v-for="(week, index) in computedWeeks" :week_number="index + 1" :matches="week.matches" />
         </div>
         <div class="flex items-center justify-end rounded-xl">
             <button type="button" @click="startSimulation"
@@ -39,8 +13,11 @@
 </template>
 
 <script>
+import Week from './../Components/Week.vue';
+
 export default {
     name: 'FixtureViewer',
+    components: { Week },
     data() {
         return {
             teams: [

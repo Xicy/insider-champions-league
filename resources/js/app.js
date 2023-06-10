@@ -6,7 +6,7 @@ import NotFound from './Pages/NotFound.vue';
 import Dashboard from './Pages/Dashboard.vue';
 import TournamentCreate from './Pages/TournamentCreate.vue';
 import FixtureViewer from './Pages/FixtureViewer.vue';
-
+import Simulation from './Pages/Simulation.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,6 +15,7 @@ const router = createRouter({
         { path: '/', component: Dashboard },
         { path: '/tournament/create', component: TournamentCreate },
         { path: '/fixture', component: FixtureViewer },
+        { path: '/simulation', component: Simulation },
     ]
 });
 
